@@ -1,40 +1,44 @@
 import './_home.sass'
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import lol_logo from "../../assets/images/league_logo.svg"
+import { Link } from 'react-router-dom';
 
 
 function Home() {
-    const [champions, setChampions] = useState([]);
-  
-    useEffect(() => {
-      axios.get('https://ddragon.leagueoflegends.com/cdn/13.21.1/data/fr_FR/champion.json')
-        .then(response => {
-          const championData = response.data.data;
-          const championList = Object.values(championData).map(champion => ({
-            id: champion.key,
-            name: champion.name,
-            img: `https://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${champion.image.full}`,
-          }));
-          setChampions(championList);
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération de la liste des champions :', error);
-        });
-    }, []);
+
   return(
     <div className="Home">
-       <h1>Liste des champions de League of Legends </h1>
+        <nav class="navbar fixed-top navbar-expand-lg bg-black navbar-dark ">
+      <div class="container w-75">
+      <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <Link className='nav-link active text-light' to={'/champions'}>Champions</Link>
+            </li>
+            <li class="nav-item">
+              <Link className='nav-link active text-light' to={'/items'}>Items</Link>
+            </li>
+          </ul>
+        </div>
+          <Link to={'/'}><img className='test' src={lol_logo} alt="" /></Link>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+          <li class="nav-item">
+              <Link className='nav-link active text-light' to={'/esport'}>Esport</Link>
+            </li>
+            <li class="nav-item">
+              <Link className='nav-link active text-light' to={'/contact'}>Contact</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
        <div className='section1_bg'>
 
        </div>
-      <ul className='section1_champ'>
-        {champions.map(champion => (
-        <div key={champion.id}>
-          <li >{champion.name}</li>
-          <li><img src={champion.img} alt={champion.name} /></li>
-        </div>
-        ))}
-      </ul>
     </div>
   )
 
