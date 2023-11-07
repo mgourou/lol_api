@@ -3,9 +3,68 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import lol_logo from "../../assets/images/league_logo.svg"
 import { Link } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 
-function Champions(props) {
+function normalizeChampionName(name) {
+  // Remplacez les caractères spéciaux, par exemple, les espaces par des tirets bas (_),
+  // supprimez les accents et ajoutez une majuscule au début.
+  const normalizedName = name.replace(/ /g, '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/^(.)/, c => c.toUpperCase());
+
+  // Exceptions pour certains champions
+  switch (name) {
+    case 'LeBlanc':
+      return 'Leblanc';
+    case "Cho'Gath":
+      return 'Chogath';
+    case "Aurelion Sol":
+      return 'AurelionSol';
+    case "Bel'Veth":
+      return 'Belveth';
+    case "Dr. Mundo":
+      return 'DrMundo';
+    case "Jarvan IV":
+      return 'JarvanIV';
+    case "Kai'Sa":
+      return 'Kaisa';
+    case "Kha'Zix":
+      return 'Khazix';
+    case "Kog'Maw":
+      return 'KogMaw';
+    case "K'Santé":
+      return 'KSante';
+    case "Lee Sin":
+      return 'LeeSin';
+    case "Maître Yi":
+      return 'MasterYi';
+    case "Miss Fortune":
+      return 'MissFortune';
+    case "Wukong":
+      return 'MonkeyKing';
+    case "Nunu et Willump":
+      return 'Nunu';
+    case "Rek'Sai":
+      return 'RekSai';
+    case "Renata Glasc":
+      return 'Renata';
+    case "Séraphine":
+      return 'Seraphine';
+    case "Tahm Kench":
+      return 'TahmKench';
+    case "Twisted Fate":
+      return 'TwistedFate';
+    case "Vel'Koz":
+      return 'Velkoz';
+    case "Xin Zhao":
+        return 'XinZhao';
+    case "Zoé":
+        return 'Zoe';
+    default:
+      return normalizedName;
+  }
+}
+
+function Champions(props , { champion, imageInfo }) {
     const [champions, setChampions] = useState([]);
     const [selectedType, setSelectedType] = useState("All");
     const [selectedDipstick, setSelectedDipstick] = useState("All");
@@ -19,7 +78,7 @@ function Champions(props) {
           const championList = Object.values(championData).map(champion => ({
             id: champion.key,
             name: champion.name,
-            img: `https://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${champion.image.full}`,
+            img: `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${normalizeChampionName(champion.name)}_0.jpg`,
             tag : champion.tags[0],
             dipstick : champion.partype,
           }));
@@ -65,6 +124,11 @@ function Champions(props) {
 
   return(
     <div className="Champions">
+      <Helmet>
+        <title>Champions -</title>
+        <meta name="description" content="Helmet application" />
+        <link rel="icon" href={lol_logo} />
+    </Helmet>
         <nav class="navbar fixed-top navbar-expand-lg bg-black navbar-dark ">
       <div class="container w-75">
       <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
@@ -94,40 +158,40 @@ function Champions(props) {
         </div>
       </div>
     </nav>
-    <div>
-    <div className='div_input_select'>
-          <input type="text" placeholder='Recherche un champion...' value={searchText} onChange={(event) => setSearchText(event.target.value)} />
-          <div className='div_input_select2'>
-            <select value={selectedType} onChange={handleSelectChangeType}>
-                <option value="All">Tous</option>
-                <option value="Assassin">Assassin</option>
-                <option value="Mage">Mage</option>
-                <option value="Support">Support</option>
-                <option value="Tank">Tank</option>
-                <option value="Fighter">Combattant</option>
-                <option value="Marksman">Tireur</option>
-            </select>
-            <select value={selectedDipstick} onChange={handleSelectChangeDipstick}>
-                <option value="All">Tous</option>
-                <option value="Énergie">Énergie</option>
-                <option value="Mana">Mana</option>
-                <option value="Fureur">Fureur</option>
-                <option value="Autre">Autre</option>
-                <option value="Aucune">Aucun</option>
-            </select>
-          </div>
-        </div>
-    </div>
-      <ul className='section1_champ'>
-        {filteredData.map(champion => (
-        <Link to={`/champions/${champion.name}`}  key={champion.id}>
-            <div className='champion-item'>
-                <li >{champion.name}</li>
-                <li><img src={champion.img} alt={champion.name} /></li>
+    <div className='body_champions'>
+      <div className='div_input_select'>
+            <input type="text" placeholder='Recherche un champion...' value={searchText} onChange={(event) => setSearchText(event.target.value)} />
+            <div className='div_input_select2'>
+              <select value={selectedType} onChange={handleSelectChangeType}>
+                  <option value="All">Tous</option>
+                  <option value="Assassin">Assassin</option>
+                  <option value="Mage">Mage</option>
+                  <option value="Support">Support</option>
+                  <option value="Tank">Tank</option>
+                  <option value="Fighter">Combattant</option>
+                  <option value="Marksman">Tireur</option>
+              </select>
+              <select value={selectedDipstick} onChange={handleSelectChangeDipstick}>
+                  <option value="All">Tous</option>
+                  <option value="Énergie">Énergie</option>
+                  <option value="Mana">Mana</option>
+                  <option value="Fureur">Fureur</option>
+                  <option value="Autre">Autre</option>
+                  <option value="Aucune">Aucun</option>
+              </select>
             </div>
-        </Link>
-        ))}
-      </ul>
+          </div>
+        <ul className='section1_champ'>
+          {filteredData.map(champion => (
+          <Link to={`/champions/${champion.name}`}  key={champion.id}>
+              <div className='champion-item'>
+                  <li><img src={champion.img} alt={champion.name} /></li>
+                  <li className='champion-name'>{champion.name}</li>
+              </div>
+          </Link>
+          ))}
+        </ul>
+          </div>
     </div>
   )
 

@@ -5,6 +5,7 @@ import Home from './features/Home/Home';
 import RechercheChampion from './features/RechercheChampion/RechercheChampion';
 import RechercheItem from './features/RechercheItem/RechercheItem';
 import Champions from './features/Champions/Champions';
+import Summoner from './features/Summoner/Summoner';
 import Items from './features/Items/Items';
 import axios from 'axios';
 
@@ -51,6 +52,10 @@ function App() {
     {
       path: '/items/:code',
       element: <RechercheItem/>,
+    },
+    {
+      path: '/summoner',
+      element: <Summoner/>,
     },
     {
       path: '*',
