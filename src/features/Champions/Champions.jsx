@@ -125,34 +125,26 @@ function Champions(props , { champion, imageInfo }) {
   return(
     <div className="Champions">
       <Helmet>
-        <title>Champions -</title>
+        <title>Champions</title>
         <meta name="description" content="Helmet application" />
         <link rel="icon" href={lol_logo} />
     </Helmet>
         <nav class="navbar fixed-top navbar-expand-lg bg-black navbar-dark ">
       <div class="container w-75">
       <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
-          <ul class="navbar-nav">
-          <li class="nav-item">
-              <Link className='nav-link active text-light' to={'/champions'}>Champions</Link>
-            </li>
-            <li class="nav-item">
-              <Link className='nav-link active text-light' to={'/items'}>Items</Link>
-            </li>
-          </ul>
-        </div>
         <Link to={'/'}><img className='test' src={lol_logo} alt="" /></Link>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
+        <ul class="navbar-nav">
           <li class="nav-item">
-              <Link className='nav-link active text-light' to={'/esport'}>Esport</Link>
+              <Link className='nav-link active text-light' to={'/champions'}>Champions</Link>
             </li>
             <li class="nav-item">
-              <Link className='nav-link active text-light' to={'/contact'}>Contact</Link>
+              <Link className='nav-link active text-light' to={'/items'}>Items</Link>
             </li>
           </ul>
         </div>
@@ -185,7 +177,7 @@ function Champions(props , { champion, imageInfo }) {
           {filteredData.map(champion => (
           <Link to={`/champions/${champion.name}`}  key={champion.id}>
               <div className='champion-item'>
-                  <li><img src={champion.img} alt={champion.name} /></li>
+                  <li className='champion-img'><img src={champion.img} alt={champion.name} /></li>
                   <li className='champion-name'>{champion.name}</li>
               </div>
           </Link>

@@ -67,6 +67,7 @@ function RechercheChampion({ data }, props) {
   const [loading, setLoading] = useState(true);
   const { code } = useParams();
   const selectedChampion = data.find((champion) => normalizeChampionName(champion.name) === normalizeChampionName(code));
+  const splash = `https://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${normalizeChampionName(selectedChampion.name)}.png`;
 
   useEffect(() => {
     if (selectedChampion) {
@@ -99,8 +100,11 @@ function RechercheChampion({ data }, props) {
         <img className="champion_img_bg" src={championImageURL} alt={selectedChampion} />
         <img className="champion_img_on" src={championImageURL} alt={selectedChampion} />
       </div>
-      <div></div>
-      <h1>{selectedChampion.name}</h1>
+      <div className='champion-info'>
+        <span>{selectedChampion.name}</span>
+        <img src={splash} alt={selectedChampion.name} />
+
+      </div>
     </div>
   );
 }
