@@ -24,6 +24,11 @@ function App() {
           img: `https://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${champion.image.full}`,
           tag : champion.tags[0],
           dipstick : champion.partype,
+          title : champion.title,
+          blurb : champion.blurb,
+          stats : champion.stats,
+          infos : champion.info,
+          tags : champion.tags,
         }));
         setData(championList);
       })

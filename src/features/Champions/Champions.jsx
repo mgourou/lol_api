@@ -64,7 +64,7 @@ function normalizeChampionName(name) {
   }
 }
 
-function Champions(props , { champion, imageInfo }) {
+function Champions(props , { champion }) {
     const [champions, setChampions] = useState([]);
     const [selectedType, setSelectedType] = useState("All");
     const [selectedDipstick, setSelectedDipstick] = useState("All");
